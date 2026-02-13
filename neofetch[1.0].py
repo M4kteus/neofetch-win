@@ -4,12 +4,14 @@ import cpuinfo
 import psutil
 from uptime import uptime
 import tkinter as tk
+import wmi
 
 root = tk.Tk()
 root.withdraw()
 Largura = root.winfo_screenwidth()
 Altura = root.winfo_screenheight()
 my_cpuinfo = cpuinfo.get_cpu_info()
+pc = wmi.WMI()
 
 LOGO = r"""                                                                               
                               ::++::mmmm++++mm++                                                    
@@ -55,7 +57,8 @@ INFO = [
     f"[blue]Resolution: [/blue]{Largura}x{Altura}",
     f"[blue]Processor: [/blue]{platform.processor()}",
     f"[blue]CPU info: [/blue]{my_cpuinfo['brand_raw']}",
-    f"[blue]Total RAM: [/blue]{psutil.virtual_memory().total / (1024 ** 3):.2F} GB"
+    f"[blue]Total RAM: [/blue]{psutil.virtual_memory().total / (1024 ** 3):.2F} GB",
+    f"[blue]GPU: [/blue]{pc.Win32_VideoController()[0].name}"
 ]
 
 #Divide o texto em varias linhas
